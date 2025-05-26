@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MotoBR - Experiência Radical</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --fire-red: #ff0040;
+        --electric-orange: #ff6600;
+        --golden-yellow: #ffcc00;
+        --lime-green: #ccff00;
+        --electric-purple: #8800ff;
+        --chrome-silver: #c0c0c0;
+        --dark-carbon: #0a0a0a;
+        --darker-carbon: #050505;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --engine-red: #cc0000;
+        --exhaust-orange: #ff4400;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Rajdhani", sans-serif;
+        background: var(--dark-carbon);
+        color: white;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* Custom Cursor */
+      .custom-cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        background: radial-gradient(circle, var(--fire-red), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.1s ease;
+        mix-blend-mode: difference;
+      }
+
+      .cursor-trail {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        background: var(--electric-orange);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0;
+      }
+
+      /* Animated Background */
+      .space-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 0, 64, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 102, 0, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(204, 255, 0, 0.08) 0%,
+            transparent 50%
+          ),
+          linear-gradient(
+            135deg,
+            var(--dark-carbon) 0%,
+            var(--darker-carbon) 100%
+          );
+        animation: backgroundShift 20s ease-in-out infinite;
+      }
+
+      @keyframes backgroundShift {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
+        50% {
+          transform: scale(1.1) rotate(2deg);
+        }
+      }
+
+      /* Engine Particles */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: var(--fire-red);
+        border-radius: 50%;
+        animation: engineFloat 12s linear infinite;
+      }
+
+      @keyframes engineFloat {
+        0% {
+          transform: translateY(100vh) translateX(0px);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) translateX(100px);
+          opacity: 0;
+        }
+      }
+
+      /* Aggressive Header */
+      .aggressive-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 2px solid var(--fire-red);
+        padding: 20px 0;
+        transition: all 0.3s ease;
+      }
+
+      .aggressive-header.scrolled {
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(30px);
+        box-shadow: 0 10px 30px rgba(255, 0, 64, 0.3);
+      }
+
+      .logo-aggressive {
+        font-family: "Orbitron", monospace;
+        font-size: 2.8rem;
+        font-weight: 900;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange),
+          var(--golden-yellow)
+        );
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fireGradient 3s ease-in-out infinite;
+        text-shadow: 0 0 30px rgba(255, 0, 64, 0.8);
+      }
+
+      @keyframes fireGradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      /* Racing Search */
+      .racing-search {
+        position: relative;
+        max-width: 500px;
+      }
+
+      .racing-search input {
+        background: var(--glass-bg);
+        border: 2px solid var(--electric-orange);
+        border-radius: 50px;
+        padding: 15px 60px 15px 25px;
+        color: white;
+        font-size: 1.1rem;
+        width: 100%;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .racing-search input:focus {
+        outline: none;
+        border-color: var(--fire-red);
+        box-shadow: 0 0 25px rgba(255, 0, 64, 0.4),
+          inset 0 0 25px rgba(255, 0, 64, 0.1);
+        transform: scale(1.02);
+      }
+
+      .racing-search button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange)
+        );
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        color: white;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .racing-search button:hover {
+        transform: translateY(-50%) scale(1.1) rotate(360deg);
+        box-shadow: 0 0 30px rgba(255, 0, 64, 0.8);
+      }
+
+      /* Racing Navigation */
+      .racing-nav {
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border-top: 1px solid var(--glass-border);
+        border-bottom: 2px solid var(--electric-orange);
+        margin-top: 20px;
+      }
+
+      .racing-nav-link {
+        color: white !important;
+        padding: 20px 25px !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        transition: all 0.3s ease;
+        border: none;
+        background: transparent;
+      }
+
+      .racing-nav-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          var(--fire-red),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .racing-nav-link:hover {
+        color: var(--fire-red) !important;
+        text-shadow: 0 0 15px var(--fire-red);
+        transform: translateY(-3px);
+      }
+
+      .racing-nav-link:hover::before {
+        opacity: 0.15;
+      }
+
+      /* Explosive Hero Section */
+      .hero-explosive {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        perspective: 1000px;
+        overflow: hidden;
+      }
+
+      .hero-content-explosive {
+        text-align: center;
+        transform-style: preserve-3d;
+        animation: enginePulse 4s ease-in-out infinite;
+      }
+
+      @keyframes enginePulse {
+        0%,
+        100% {
+          transform: translateY(0px) rotateX(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotateX(3deg);
+        }
+      }
+
+      .hero-title-explosive {
+        font-family: "Orbitron", monospace;
+        font-size: 5.5rem;
+        font-weight: 900;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange),
+          var(--golden-yellow),
+          var(--lime-green)
+        );
+        background-size: 400% 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: explosiveGradient 3s ease-in-out infinite;
+        text-shadow: 0 0 60px rgba(255, 0, 64, 1);
+        margin-bottom: 30px;
+        transform: translateZ(50px);
+      }
+
+      @keyframes explosiveGradient {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        25% {
+          background-position: 100% 0%;
+        }
+        50% {
+          background-position: 100% 100%;
+        }
+        75% {
+          background-position: 0% 100%;
+        }
+      }
+
+      .hero-subtitle-explosive {
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 40px;
+        transform: translateZ(30px);
+        animation: engineBeat 2s ease-in-out infinite;
+        font-weight: 600;
+      }
+
+      @keyframes engineBeat {
+        0%,
+        100% {
+          opacity: 0.9;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* Racing Buttons */
+      .racing-btn {
+        background: var(--glass-bg);
+        border: 3px solid var(--fire-red);
+        color: white;
+        padding: 18px 45px;
+        border-radius: 50px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        margin: 15px;
+        transform: translateZ(20px);
+        font-size: 1.1rem;
+      }
+
+      .racing-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 0, 64, 0.4),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .racing-btn:hover {
+        transform: translateZ(20px) scale(1.08);
+        box-shadow: 0 0 40px rgba(255, 0, 64, 0.8),
+          inset 0 0 40px rgba(255, 0, 64, 0.1);
+        border-color: var(--electric-orange);
+      }
+
+      .racing-btn:hover::before {
+        left: 100%;
+      }
+
+      /* Motorcycle Categories Section */
+      .moto-categories {
+        padding: 100px 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 0, 64, 0.08),
+          rgba(255, 102, 0, 0.08)
+        );
+      }
+
+      .category-title {
+        font-family: "Orbitron", monospace;
+        font-size: 3.8rem;
+        text-align: center;
+        margin-bottom: 80px;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        font-weight: 900;
+      }
+
+      .category-title::after {
+        content: "";
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 250px;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--fire-red),
+          var(--electric-orange),
+          var(--golden-yellow)
+        );
+        border-radius: 3px;
+        animation: categoryGlow 2s ease-in-out infinite;
+      }
+
+      @keyframes categoryGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 15px rgba(255, 0, 64, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(255, 0, 64, 1);
+        }
+      }
+
+      .category-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid var(--glass-border);
+        border-radius: 25px;
+        padding: 40px;
+        margin: 30px 0;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: all 0.5s ease;
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .category-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange),
+          var(--golden-yellow),
+          var(--lime-green)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      .category-card:hover {
+        transform: translateY(-25px) rotateX(8deg) rotateY(3deg);
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.4),
+          0 0 60px rgba(255, 0, 64, 0.3);
+        border-color: var(--fire-red);
+      }
+
+      .category-card:hover::before {
+        opacity: 0.12;
+      }
+
+      .category-icon {
+        font-size: 4.5rem;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 25px;
+        animation: iconRevolution 5s ease-in-out infinite;
+      }
+
+      @keyframes iconRevolution {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(8deg);
+        }
+      }
+
+      /* Rider Types Section */
+      .rider-types {
+        padding: 100px 0;
+        background: var(--darker-carbon);
+      }
+
+      .rider-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 2px solid var(--electric-orange);
+        border-radius: 20px;
+        padding: 35px;
+        text-align: center;
+        transition: all 0.5s ease;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .rider-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          from 0deg,
+          transparent,
+          var(--fire-red),
+          transparent,
+          var(--electric-orange),
+          transparent
+        );
+        animation: riderRotate 6s linear infinite;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .rider-card:hover::after {
+        opacity: 0.2;
+      }
+
+      @keyframes riderRotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .rider-card:hover {
+        transform: translateY(-20px) scale(1.05);
+        box-shadow: 0 30px 60px rgba(255, 0, 64, 0.4);
+        border-color: var(--fire-red);
+      }
+
+      .rider-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        font-size: 3rem;
+        color: white;
+        animation: avatarPulse 3s ease-in-out infinite;
+      }
+
+      @keyframes avatarPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      /* Brand Showcase */
+      .brand-showcase {
+        padding: 100px 0;
+        background: linear-gradient(
+          135deg,
+          rgba(136, 0, 255, 0.08),
+          rgba(255, 0, 64, 0.08)
+        );
+      }
+
+      .brand-logo {
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.4s ease;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .brand-logo::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 0, 64, 0.1),
+          transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .brand-logo:hover::before {
+        transform: translateX(100%);
+      }
+
+      .brand-logo:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(255, 0, 64, 0.2);
+        border-color: var(--electric-orange);
+      }
+
+      /* Explosive Product Grid */
+      .explosive-grid {
+        padding: 100px 0;
+        background: var(--dark-carbon);
+      }
+
+      .explosive-title {
+        font-family: "Orbitron", monospace;
+        font-size: 4rem;
+        text-align: center;
+        margin-bottom: 80px;
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        font-weight: 900;
+      }
+
+      .explosive-title::after {
+        content: "";
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 300px;
+        height: 6px;
+        background: linear-gradient(
+          90deg,
+          var(--fire-red),
+          var(--electric-orange),
+          var(--golden-yellow)
+        );
+        border-radius: 3px;
+        animation: explosiveLineGlow 2s ease-in-out infinite;
+      }
+
+      @keyframes explosiveLineGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(255, 0, 64, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 50px rgba(255, 0, 64, 1);
+        }
+      }
+
+      .product-explosive {
+        background: var(--glass-bg);
+        backdrop-filter: blur(25px);
+        border: 2px solid var(--glass-border);
+        border-radius: 25px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.5s ease;
+        transform-style: preserve-3d;
+        margin-bottom: 30px;
+      }
+
+      .product-explosive::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          from 0deg,
+          transparent,
+          var(--fire-red),
+          transparent,
+          var(--electric-orange),
+          transparent
+        );
+        animation: productRotate 5s linear infinite;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .product-explosive:hover::before {
+        opacity: 0.25;
+      }
+
+      @keyframes productRotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .product-explosive:hover {
+        transform: translateY(-20px) scale(1.03);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+          0 0 60px rgba(255, 0, 64, 0.4);
+        border-color: var(--fire-red);
+      }
+
+      .product-image-explosive {
+        height: 320px;
+        background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-image-explosive::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 0, 64, 0.15),
+          transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .product-explosive:hover .product-image-explosive::before {
+        transform: translateX(100%);
+      }
+
+      .product-info-explosive {
+        padding: 35px;
+      }
+
+      .product-title-explosive {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: white;
+      }
+
+      .product-price-explosive {
+        font-size: 2rem;
+        font-weight: 900;
+        background: linear-gradient(
+          45deg,
+          var(--golden-yellow),
+          var(--fire-red)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 25px;
+      }
+
+      .explosive-btn {
+        background: linear-gradient(
+          45deg,
+          var(--fire-red),
+          var(--electric-orange)
+        );
+        border: none;
+        border-radius: 50px;
+        padding: 18px 35px;
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+      }
+
+      .explosive-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          var(--electric-orange),
+          var(--golden-yellow)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .explosive-btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 15px 40px rgba(255, 0, 64, 0.5);
+      }
+
+      .explosive-btn:hover::before {
+        opacity: 1;
+      }
+
+      .explosive-btn span {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero-title-explosive {
+          font-size: 3.5rem;
+        }
+
+        .hero-subtitle-explosive {
+          font-size: 1.4rem;
+        }
+
+        .logo-aggressive {
+          font-size: 2rem;
+        }
+
+        .explosive-title,
+        .category-title {
+          font-size: 2.8rem;
+        }
+      }
+
+      /* Loading Animation */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark-carbon);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: opacity 1s ease;
+      }
+
+      .loading-spinner {
+        width: 120px;
+        height: 120px;
+        border: 4px solid transparent;
+        border-top: 4px solid var(--fire-red);
+        border-right: 4px solid var(--electric-orange);
+        border-radius: 50%;
+        animation: engineSpin 1s linear infinite;
+      }
+
+      @keyframes engineSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Scroll Indicator */
+      .scroll-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--fire-red),
+          var(--electric-orange),
+          var(--golden-yellow)
+        );
+        transform-origin: left;
+        transform: scaleX(0);
+        z-index: 9999;
+        transition: transform 0.1s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- Animated Background -->
+    <div class="space-bg"></div>
+
+    <!-- Engine Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Aggressive Header -->
+    <header class="aggressive-header" id="header">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-3 col-md-4">
+            <div class="logo-aggressive">
+              MOTO<span style="color: var(--electric-orange)">BR</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4">
+            <div class="racing-search">
+              <input type="text" placeholder="Acelere sua busca..." />
+              <button type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 text-end">
+            <i
+              class="fas fa-shopping-cart"
+              style="font-size: 1.8rem; color: var(--fire-red)"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Racing Navigation -->
+      <nav class="racing-nav">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex justify-content-center flex-wrap">
+                <a href="#" class="racing-nav-link">Capacetes</a>
+                <a href="#" class="racing-nav-link">Jaquetas</a>
+                <a href="#" class="racing-nav-link">Luvas</a>
+                <a href="#" class="racing-nav-link">Botas</a>
+                <a href="#" class="racing-nav-link">Escapamentos</a>
+                <a href="#" class="racing-nav-link">Performance</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Explosive Hero Section -->
+    <section class="hero-explosive">
+      <div class="hero-content-explosive">
+        <h1 class="hero-title-explosive">FIRE FRIDAY</h1>
+        <p class="hero-subtitle-explosive">
+          Acelere Sua Paixão - Equipamentos de Elite
+        </p>
+        <div>
+          <button class="racing-btn">Queimar Borracha</button>
+          <button class="racing-btn">Modo Turbo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Motorcycle Categories -->
+    <section class="moto-categories">
+      <div class="container">
+        <h2 class="category-title">CATEGORIAS RADICAIS</h2>
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="category-card text-center">
+              <div class="category-icon">
+                <i class="fas fa-motorcycle"></i>
+              </div>
+              <h4>STREET RACING</h4>
+              <p>
+                Equipamentos para dominar as ruas com estilo e segurança máxima
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="category-card text-center">
+              <div class="category-icon">
+                <i class="fas fa-mountain"></i>
+              </div>
+              <h4>OFF-ROAD EXTREME</h4>
+              <p>
+                Gear resistente para aventuras selvagens e terrenos impossíveis
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="category-card text-center">
+              <div class="category-icon">
+                <i class="fas fa-flag-checkered"></i>
+              </div>
+              <h4>TRACK RACING</h4>
+              <p>Performance profissional para pilotos que vivem no limite</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rider Types -->
+    <section class="rider-types">
+      <div class="container">
+        <h2 class="category-title">PERFIS DE PILOTO</h2>
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="rider-card">
+              <div class="rider-avatar">
+                <i class="fas fa-fire"></i>
+              </div>
+              <h4>SPEED DEMON</h4>
+              <p>Para quem vive a 200 por hora</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="rider-card">
+              <div class="rider-avatar">
+                <i class="fas fa-skull"></i>
+              </div>
+              <h4>ROAD WARRIOR</h4>
+              <p>Guerreiro das estradas urbanas</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="rider-card">
+              <div class="rider-avatar">
+                <i class="fas fa-bolt"></i>
+              </div>
+              <h4>THUNDER RIDER</h4>
+              <p>Poder e adrenalina pura</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="rider-card">
+              <div class="rider-avatar">
+                <i class="fas fa-crown"></i>
+              </div>
+              <h4>LEGEND</h4>
+              <p>Elite dos motociclistas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Showcase -->
+    <section class="brand-showcase">
+      <div class="container">
+        <h2 class="category-title">MARCAS LENDÁRIAS</h2>
+        <div class="row g-4">
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="brand-logo">
+              <h5>ARAI</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="brand-logo">
+              <h5>SHOEI</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="brand-logo">
+              <h5>AGV</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="brand-logo">
+              <h5>ALPINESTARS</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="brand-logo">
+              <h5>DAINESE</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6">
+            <div class="brand-logo">
+              <h5>AKRAPOVIC</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Explosive Product Grid -->
+    <section class="explosive-grid">
+      <div class="container">
+        <h2 class="explosive-title">ARSENAL DE GUERRA</h2>
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="product-explosive">
+              <div class="product-image-explosive">
+                <img
+                  src="/placeholder.svg?height=280&width=320"
+                  alt="Capacete Agressivo"
+                  style="
+                    max-width: 85%;
+                    filter: drop-shadow(0 0 25px rgba(255, 0, 64, 0.6));
+                  "
+                />
+              </div>
+              <div class="product-info-explosive">
+                <h5 class="product-title-explosive">Capacete Fire Demon</h5>
+                <div class="product-price-explosive">R$ 1.899,99</div>
+                <button class="explosive-btn">
+                  <span>DOMINAR ASFALTO</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product-explosive">
+              <div class="product-image-explosive">
+                <img
+                  src="/placeholder.svg?height=280&width=320"
+                  alt="Jaqueta Racing"
+                  style="
+                    max-width: 85%;
+                    filter: drop-shadow(0 0 25px rgba(255, 102, 0, 0.6));
+                  "
+                />
+              </div>
+              <div class="product-info-explosive">
+                <h5 class="product-title-explosive">Jaqueta Thunder Strike</h5>
+                <div class="product-price-explosive">R$ 2.499,99</div>
+                <button class="explosive-btn">
+                  <span>BLINDAGEM TOTAL</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product-explosive">
+              <div class="product-image-explosive">
+                <img
+                  src="/placeholder.svg?height=280&width=320"
+                  alt="Escapamento Beast"
+                  style="
+                    max-width: 85%;
+                    filter: drop-shadow(0 0 25px rgba(204, 255, 0, 0.6));
+                  "
+                />
+              </div>
+              <div class="product-info-explosive">
+                <h5 class="product-title-explosive">Escapamento Beast Mode</h5>
+                <div class="product-price-explosive">R$ 3.299,99</div>
+                <button class="explosive-btn">
+                  <span>RUGIDO SELVAGEM</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="product-explosive">
+              <div class="product-image-explosive">
+                <img
+                  src="/placeholder.svg?height=280&width=320"
+                  alt="Luvas Racing"
+                  style="
+                    max-width: 85%;
+                    filter: drop-shadow(0 0 25px rgba(136, 0, 255, 0.6));
+                  "
+                />
+              </div>
+              <div class="product-info-explosive">
+                <h5 class="product-title-explosive">Luvas Lightning Grip</h5>
+                <div class="product-price-explosive">R$ 899,99</div>
+                <button class="explosive-btn">
+                  <span>CONTROLE ABSOLUTO</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Loading Screen
+      window.addEventListener("load", function () {
+        setTimeout(() => {
+          document.getElementById("loadingScreen").style.opacity = "0";
+          setTimeout(() => {
+            document.getElementById("loadingScreen").style.display = "none";
+          }, 1000);
+        }, 1500);
+      });
+
+      // Custom Cursor
+      const cursor = document.getElementById("cursor");
+      const trails = [];
+
+      for (let i = 0; i < 12; i++) {
+        const trail = document.createElement("div");
+        trail.className = "cursor-trail";
+        document.body.appendChild(trail);
+        trails.push(trail);
+      }
+
+      let mouseX = 0,
+        mouseY = 0;
+      let trailX = [],
+        trailY = [];
+
+      for (let i = 0; i < trails.length; i++) {
+        trailX[i] = 0;
+        trailY[i] = 0;
+      }
+
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX - 10 + "px";
+        cursor.style.top = mouseY - 10 + "px";
+      });
+
+      function updateTrails() {
+        for (let i = trails.length - 1; i > 0; i--) {
+          trailX[i] = trailX[i - 1];
+          trailY[i] = trailY[i - 1];
+        }
+        trailX[0] = mouseX;
+        trailY[0] = mouseY;
+
+        trails.forEach((trail, index) => {
+          trail.style.left = trailX[index] - 3 + "px";
+          trail.style.top = trailY[index] - 3 + "px";
+          trail.style.opacity = ((trails.length - index) / trails.length) * 0.6;
+        });
+
+        requestAnimationFrame(updateTrails);
+      }
+      updateTrails();
+
+      // Engine Particles
+      function createParticles() {
+        const particlesContainer = document.getElementById("particles");
+
+        for (let i = 0; i < 60; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          particle.style.left = Math.random() * 100 + "%";
+          particle.style.animationDelay = Math.random() * 12 + "s";
+          particle.style.animationDuration = Math.random() * 8 + 8 + "s";
+
+          const colors = [
+            "var(--fire-red)",
+            "var(--electric-orange)",
+            "var(--golden-yellow)",
+            "var(--lime-green)",
+          ];
+          particle.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          particle.style.boxShadow = `0 0 15px ${
+            colors[Math.floor(Math.random() * colors.length)]
+          }`;
+
+          particlesContainer.appendChild(particle);
+        }
+      }
+      createParticles();
+
+      // Header Scroll Effect
+      window.addEventListener("scroll", () => {
+        const header = document.getElementById("header");
+        const scrollIndicator = document.getElementById("scrollIndicator");
+
+        if (window.scrollY > 100) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+
+        // Update scroll indicator
+        const scrollPercent =
+          (window.scrollY /
+            (document.documentElement.scrollHeight - window.innerHeight)) *
+          100;
+        scrollIndicator.style.transform = `scaleX(${scrollPercent / 100})`;
+      });
+
+      // 3D Card Interactions
+      document
+        .querySelectorAll(".category-card, .product-explosive, .rider-card")
+        .forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 8;
+            const rotateY = (centerX - x) / 8;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(25px)`;
+          });
+
+          card.addEventListener("mouseleave", () => {
+            card.style.transform =
+              "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)";
+          });
+        });
+
+      // Explosive Button Effects
+      document
+        .querySelectorAll(".explosive-btn, .racing-btn")
+        .forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            // Create explosive ripple effect
+            const ripple = document.createElement("span");
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + "px";
+            ripple.style.left = x + "px";
+            ripple.style.top = y + "px";
+            ripple.style.position = "absolute";
+            ripple.style.borderRadius = "50%";
+            ripple.style.background = "rgba(255, 255, 255, 0.6)";
+            ripple.style.transform = "scale(0)";
+            ripple.style.animation = "explosiveRipple 0.8s linear";
+            ripple.style.pointerEvents = "none";
+
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+              ripple.remove();
+            }, 800);
+
+            // Button explosive feedback
+            this.style.transform = "scale(0.92)";
+            setTimeout(() => {
+              this.style.transform = "scale(1.12)";
+              setTimeout(() => {
+                this.style.transform = "scale(1)";
+              }, 120);
+            }, 120);
+          });
+        });
+
+      // Add explosive ripple animation
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes explosiveRipple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Parallax Effect
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll(
+          ".hero-content-explosive"
+        );
+
+        parallaxElements.forEach((element) => {
+          const speed = 0.3;
+          element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+      });
+
+      // Engine Sound Effects (Optional)
+      function playEngineSound() {
+        // You can add engine sound files here
+        // const audio = new Audio('engine-rev.mp3');
+        // audio.volume = 0.2;
+        // audio.play();
+      }
+
+      // Add engine sound to interactive elements
+      document
+        .querySelectorAll(".racing-btn, .explosive-btn, .racing-nav-link")
+        .forEach((element) => {
+          element.addEventListener("mouseenter", playEngineSound);
+        });
+
+      // Dynamic color shifting for special elements
+      setInterval(() => {
+        const specialElements = document.querySelectorAll(
+          ".logo-aggressive, .hero-title-explosive"
+        );
+        specialElements.forEach((element) => {
+          element.style.filter = `hue-rotate(${Math.random() * 30}deg)`;
+        });
+      }, 3000);
+    </script>
+  </body>
+</html>
